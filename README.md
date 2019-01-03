@@ -19,4 +19,4 @@ Once the application is up and running, hit the createOrder POST endpoint(http:/
 On receiving the createOrder request, the service would publish OrderCreated event on Kafka topic: com.example.lty.order. The EventListener class is listening on topic: com.example.lty.order. The OrderCreated event is consumed internally and Order document is created in couchbase DB.
 
 
-Since, the event is consumed internally which then persists the order in repository and the same event is consumed by external consumers also, this way using Listen To Yourself pattern both: persistence of order to DB and raising event for external consumers happen using one call ensuring atomicity i.e. either both succeed or both fail
+Since, the event is consumed internally which then persists the order in repository(instead of directly persisting)  and the same event is consumed by external consumers also, this way using Listen To Yourself pattern both: persistence of order to DB and raising event for external consumers happen using one call ensuring atomicity i.e. either both succeed or both fail
