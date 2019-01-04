@@ -1,12 +1,13 @@
 # listenToYourself-microservices-pattern-implementation
 Implementation of listen to yourself micro services design pattern using Spring cloud stream (Kakfa binder) and couchbase as persistence store 
 
-Pre-requisite:
+# Pre-requisite:
 1. Couchbase running locally
 2. Create couchbase bucket with name "listentoyourself"
 3. Create couchbase user with name "listentoyourself" and grant Bucket Admin access to the user for bucket "listentoyourself"
 4. Kafka(port 9092) and zookeeper running locally
 
+# Functionality
 Once the application is up and running, hit the createOrder POST endpoint(http://localhost:32011/v1/createOrder) using postman or any other tool which allows sending POST requests. The order request body json example is:
 
 {
