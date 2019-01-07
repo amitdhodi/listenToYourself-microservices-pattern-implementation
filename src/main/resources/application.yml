@@ -12,20 +12,29 @@ spring:
 
    cloud:
     stream:
-      default-binder: lty-kafka
+      default-binder: lty-internal-kafka
       bindings:
         # Internal input channels
         consumeOrder:
-          binder: lty-kafka
+          binder: lty-internal-kafka
           content-type: text/plain
           group: lty-order
           destination: com.example.lty.order
           consumer:
             header-mode: raw
 
-        # Output channels
-        publishOrder:
-          binder: lty-kafka
+        # Internal Output channels
+        publishOrderInternal:
+          binder: lty-internal-kafka
+          destination: com.example.lty.order
+          content-type: application/json
+          producer:
+            sync: true
+            header-mode: raw
+
+        # External Output channels
+        publishOrderExternal:
+          binder: lty-external-kafka
           destination: com.example.lty.order
           content-type: application/json
           producer:
@@ -34,7 +43,17 @@ spring:
 
       # binder details
       binders:
-        lty-kafka:
+        lty-internal-kafka:
+          type: kafka
+          defaultCandidate: false
+          environment:
+            spring:
+              cloud:
+                stream:
+                  kafka:
+                    binder:
+                      brokers: localhost:9092
+        lty-external-kafka:
           type: kafka
           defaultCandidate: true
           environment:
@@ -43,7 +62,7 @@ spring:
                 stream:
                   kafka:
                     binder:
-                      brokers: localhost:9092
+                      brokers: localhost:9093
 
       # disable auto-commit-offset
       kafka:

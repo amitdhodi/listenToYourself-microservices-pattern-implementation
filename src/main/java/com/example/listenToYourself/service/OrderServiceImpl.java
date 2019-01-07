@@ -40,9 +40,9 @@ public class OrderServiceImpl implements OrderService{
     /**
      * Raise OrderCreated event to kafka
      * the event should be consumed internally which will then persist the order in repository
-     * and the same event would be consumed by external consumers also
+     * and the same event would be sent to the external consumers also
      * this way using Listen To Yourself pattern both: persistence of order to DB and raising event for
-     * external consumers happen using one call ensuring atomicity i.e. either both succeed or both fail
+     * external consumers happen using kafka calls only ensuring atomicity i.e. either both succeed or both fail
      */
     @Override
     public void publishOrderCreatedEvent(Order order) {

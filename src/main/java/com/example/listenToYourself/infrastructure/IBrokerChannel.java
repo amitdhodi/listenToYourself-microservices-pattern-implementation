@@ -8,11 +8,15 @@ import org.springframework.messaging.SubscribableChannel;
 public interface IBrokerChannel {
 
     String CONSUMEORDER = "consumeOrder";
-    String PUBLISHORDER = "publishOrder";
+    String PUBLISHORDERINTERNAL = "publishOrderInternal";
+    String PUBLISHORDEREXTERNAL = "publishOrderExternal";
 
     @Input(CONSUMEORDER)
     SubscribableChannel orderChannelStream();
 
-    @Output(PUBLISHORDER)
-    MessageChannel publishOrderChannelStream();
+    @Output(PUBLISHORDERINTERNAL)
+    MessageChannel publishOrderInternalChannelStream();
+
+    @Output(PUBLISHORDEREXTERNAL)
+    MessageChannel publishOrderExternalChannelStream();
 }

@@ -14,9 +14,14 @@ public class EventPublisher {
     @Autowired
     private IBrokerChannel brokerChannel;
 
-    public boolean publishOrderCreatedEvent(Message<?> message) {
-        log.info("Publishing message: " + message.toString() + " to channel: " + brokerChannel.publishOrderChannelStream().toString());
-        return brokerChannel.publishOrderChannelStream().send(message, 1000);
+    public void publishOrderCreatedEvent(Message<?> message) {
+        // Publish for internal consumer to consume and persist order in DB
+        log.info("Publishing internal message: " + message.toString() + " to channel: " + brokerChannel.publishOrderInternalChannelStream().toString());
+        brokerChannel.publishOrderInternalChannelStream().send(message, 1000);
+
+        // Publish for external consumer to consume
+        log.info("Publishing external message: " + message.toString() + " to channel: " + brokerChannel.publishOrderExternalChannelStream().toString());
+        brokerChannel.publishOrderExternalChannelStream().send(message, 1000);
     }
 }
 
