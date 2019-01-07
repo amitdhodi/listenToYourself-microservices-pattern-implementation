@@ -45,7 +45,6 @@ spring:
       binders:
         lty-internal-kafka:
           type: kafka
-          defaultCandidate: false
           environment:
             spring:
               cloud:
@@ -55,7 +54,6 @@ spring:
                       brokers: localhost:9092
         lty-external-kafka:
           type: kafka
-          defaultCandidate: true
           environment:
             spring:
               cloud:
